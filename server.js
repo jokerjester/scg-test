@@ -38,8 +38,8 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.post('/webhooks', (req, res) => {
     console.log(req.body)
-    //let reply_token = req.body.events[0].replyToken
-    //reply(reply_token)
+    let reply_token = req.body.events[0].replyToken
+    reply(reply_token)
     res.sendStatus(200)
 })
 
