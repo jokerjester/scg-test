@@ -30,6 +30,11 @@ app.get('/ans2', (req, res) => {
     })
 })
 
+// assignment3
+app.get('/webhooks', (req, res) => {
+        res.sendStatus(200)
+})
+
 app.listen(3000, () => {
     console.log('Start server at port 3000.')
 })
