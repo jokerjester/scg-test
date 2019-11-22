@@ -33,7 +33,7 @@ app.get('/ans2', (req, res) => {
 })
 
 // assignment3
-const replyToken = 'DNrLFw6H0xJ/iSkv0IdI6QnCVOD14pUX/ie0zZel0IHhapJAqb3xUSkI3XAUlx0wUiNSyV4KRGsLQ0irygjnSpNjyQeZhi+uZqzW1cMWAkOOEmKocHvOS/xw9mFVFXJez9GXfmWdaHouym0NYA9k4AdB04t89/1O/w1cDnyilFU='
+const token = 'DNrLFw6H0xJ/iSkv0IdI6QnCVOD14pUX/ie0zZel0IHhapJAqb3xUSkI3XAUlx0wUiNSyV4KRGsLQ0irygjnSpNjyQeZhi+uZqzW1cMWAkOOEmKocHvOS/xw9mFVFXJez9GXfmWdaHouym0NYA9k4AdB04t89/1O/w1cDnyilFU='
 app.post('/webhooks', (req, res) => {
     let reply_token = req.body.events[0].replyToken
     reply(reply_token)
@@ -44,7 +44,7 @@ app.post('/webhooks', (req, res) => {
 function reply(reply_token) {
     let headers = {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer '.concat(replyToken)
+        'Authorization': 'Bearer '.concat(token)
     }
     let body = JSON.stringify({
         replyToken: reply_token,
