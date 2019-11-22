@@ -46,10 +46,10 @@ app.get('/ans2', (req, res) => {
 const token = 'DNrLFw6H0xJ/iSkv0IdI6QnCVOD14pUX/ie0zZel0IHhapJAqb3xUSkI3XAUlx0wUiNSyV4KRGsLQ0irygjnSpNjyQeZhi+uZqzW1cMWAkOOEmKocHvOS/xw9mFVFXJez9GXfmWdaHouym0NYA9k4AdB04t89/1O/w1cDnyilFU='
 
 app.post('/webhooks', (req, res) => {
-    console.log(req.body)
     let reply_token = req.body.events[0].replyToken
     let question = req.body.events[0].message.text
     var answer = findAnswer(question)
+    console.log(answer)
     reply(reply_token, answer)
     res.sendStatus(200)
 })
