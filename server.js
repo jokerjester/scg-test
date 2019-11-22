@@ -41,7 +41,7 @@ app.post('/webhooks', (req, res) => {
 })
 
 
-reply = function(reply_token) {
+function reply(reply_token) {
     let headers = {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer '.concat(replyToken)
