@@ -5,13 +5,23 @@ const api_helper = require('./helpers/APIhelper')
 const status = require('http-status');
 const bodyParser = require('body-parser')
 const request = require('request')
+const mongoose = require('mongoose')
+const Sample = require('./models/sample')
 
 const  ggPlacrUri = 'https://maps.googleapis.com/maps/api/place/nearbysearch/'
 const  respType = 'json'
 const  ggKey = 'AIzaSyD00nvz4mUNbto6QrUaBmKYs2vXx_wrcbwหกฟกฟหกฟหก'
 
+// connect to db
+mongoose.connect('mongodb://jkd:p%40ssw0rd@ds211558.mlab.com:11558/heroku_vbrlvdjr')
+
+// using parsers
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
+
+// heath check
 app.get('/ping', (req, res) => {
-  res.send('Hello World')
+    res.send('OK')
 })
 
 // assignment1
@@ -34,17 +44,28 @@ app.get('/ans2', (req, res) => {
 
 // assignment3
 const token = 'DNrLFw6H0xJ/iSkv0IdI6QnCVOD14pUX/ie0zZel0IHhapJAqb3xUSkI3XAUlx0wUiNSyV4KRGsLQ0irygjnSpNjyQeZhi+uZqzW1cMWAkOOEmKocHvOS/xw9mFVFXJez9GXfmWdaHouym0NYA9k4AdB04t89/1O/w1cDnyilFU='
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json())
+
 app.post('/webhooks', (req, res) => {
     console.log(req.body)
     let reply_token = req.body.events[0].replyToken
-    reply(reply_token)
+    let question = req.body.events[0].message.text
+    var answer = findAnswer(question)
+    reply(reply_token, answer)
     res.sendStatus(200)
 })
 
+function findAnswer(question) {
+    Sample.findOne({keyword: question}).answer
+}
 
-function reply(reply_token) {
+app.post('/bot-samples', (req, res) => {
+    const sample = new Sample(req.body)
+    sample.save().then(() => console.log("sample is saved!"))
+    res.send("sample is saved!")
+})
+
+
+function reply(reply_token,answer) {
     let headers = {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer '.concat(token)
@@ -53,11 +74,7 @@ function reply(reply_token) {
         replyToken: reply_token,
         messages: [{
             type: 'text',
-            text: 'Hello'
-        },
-        {
-            type: 'text',
-            text: 'How are you?'
+            text: answer
         }]
     })
     request.post({
