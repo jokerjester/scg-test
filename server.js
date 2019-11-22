@@ -54,13 +54,20 @@ app.post('/webhooks', (req, res) => {
     res.sendStatus(200)
 })
 
+app.get('/bot-samples/:question', async (req, res) => {
+    const { question } = req.params
+    console.log(question)
+    const sample = await Sample.find({keyword: question})
+    res.send(sample)
+})
+
 function findAnswer(question) {
     Sample.findOne({keyword: question}).answer
 }
 
-app.post('/bot-samples', (req, res) => {
+app.post('/bot-samples', async (req, res) => {
     const sample = new Sample(req.body)
-    sample.save().then(() => console.log("sample is saved!"))
+    await sample.save()
     res.send("sample is saved!")
 })
 
