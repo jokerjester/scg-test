@@ -51,7 +51,7 @@ app.post('/webhooks', (req, res) => {
         if(ans == null)
             return "I don't know what are you talking about"
         else
-            ans.answer
+            return ans.answer
     })
     console.log(answer)
     reply(reply_token, answer)
