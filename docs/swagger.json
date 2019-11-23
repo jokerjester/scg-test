@@ -9,7 +9,7 @@
     }
   },
   "host": "scg-line-bot.herokuapp.com",
-  "basePath": "/",
+  "basePath": "/api/v1",
   "tags": [
     {
       "name": "XYZ",
