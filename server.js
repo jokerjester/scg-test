@@ -9,7 +9,7 @@ const ggKey = 'AIzaSyD00nvz4mUNbto6QrUaBmKYs2vXx_wrcbw'
 
 // import helpers
 const apiHelper = require('./helpers/API_Helper')
-
+const lineMsgHelper = require('./helpers/LineMessagingHelper')
 // import service layer
 const sampleService = require('./services/SampleService')
 const asm1 = require('./services/assignment1')
@@ -42,14 +42,12 @@ app.get('/ans2', (req, res) => {
 })
 
 // assignment3
-const token = 'DNrLFw6H0xJ/iSkv0IdI6QnCVOD14pUX/ie0zZel0IHhapJAqb3xUSkI3XAUlx0wUiNSyV4KRGsLQ0irygjnSpNjyQeZhi+uZqzW1cMWAkOOEmKocHvOS/xw9mFVFXJez9GXfmWdaHouym0NYA9k4AdB04t89/1O/w1cDnyilFU='
-
 app.post('/webhooks', async (req, res) => {
     let reply_token = req.body.events[0].replyToken
     let question = req.body.events[0].message.text
     console.log(question)
     let answer = sampleService.findAnswer(question).then(ans => {
-        reply(reply_token, (ans == null)? "I don't know what are you talking about" : ans.answer)
+        lineMsgHelper.reply(reply_token, (ans == null)? "I don't know what are you talking about" : ans.answer)
     })
     res.sendStatus(200)
 })
@@ -66,28 +64,6 @@ app.post('/bot-samples', async (req, res) => {
     .then(response => res.json({code: 201, data: response}))
     .catch(error => res.json({code: 500}))
 })
-
-
-function reply(reply_token,answer) {
-    let headers = {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer '.concat(token)
-    }
-    let body = JSON.stringify({
-        replyToken: reply_token,
-        messages: [{
-            type: 'text',
-            text: answer
-        }]
-    })
-    request.post({
-        url: 'https://api.line.me/v2/bot/message/reply',
-        headers: headers,
-        body: body
-    }, (err, res, body) => {
-        console.log('status = ' + res.statusCode);
-    });
-}
 
 
 var server_port = process.env.YOUR_PORT || process.env.PORT || 80;
