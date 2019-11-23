@@ -10,6 +10,16 @@ This project contains the answers of scg assignment where each answer is deloped
 - node js (express)
 - use mongo as database
 
+### How is the database structure
+- collection name: samples
+
+| field name   |      data type      |  required | description |
+| :----------: |:-------------:      |  :------: | ----------  |
+| \_id         |  string             |   true    |  Auto generated           |
+| keywaord     |    string           |   true    |             |
+| answer       | string              |   true    |             |
+
+
 ### How to use
 
 Run Project:
@@ -26,4 +36,10 @@ API Docs (Available after project's running)
 http://localhost:80/api-docs
 ```
 
-![alt text](https://qr-official.line.me/sid/L/ixa4795r.png)
+### Line Messaging
+- Scan this QR code to add my line bot as your friend
+
+![Scan this QR code to add my line bot as your friend](https://github.com/jokerjester/scg-test/blob/master/ixa4795r.png)
+
+
+- You can teach bot by using teach-bot API 
