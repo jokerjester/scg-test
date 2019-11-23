@@ -31,6 +31,7 @@ var ans1 = asm1.findXYZ(arr)
 
 // assignment2
 app.get('/ans2', (req, res) => {
+    // fix lat&long of Bang sue
     apiHelper.makeAPIcall(ggPlacrUri.concat(respType).concat("?location=13.8234866,100.5081204&radius=1500&types=restaurant&key=").concat(ggKey))
     .then(response => {
         res.status(status.OK).json({code: 200, resterants: response.results.map(result => result.name)})
