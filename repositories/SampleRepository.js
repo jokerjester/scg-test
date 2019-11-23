@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const Sample =  require('../models/sample')
 
 // connect to db
-mongoose.connect('mongodb://jkd:p%40ssw0rd@ds211558.mlab.com:11558/heroku_vbrlvdjr', { useNewUrlParser: true } )
+mongoose.connect('mongodb://user:password@ds211558.mlab.com:11558/heroku_vbrlvdjr', { useNewUrlParser: true } )
 
 this.findByKeyword = function (keyword) {
     return Sample.findOne({keyword: keyword}).then(model => model).catch(error => error)
