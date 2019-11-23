@@ -1,21 +1,24 @@
 const express = require('express')
 const app = express()
-const asm1 = require('./assignment1')
-const apiHelper = require('./helpers/APIHelper')
 const status = require('http-status');
 const bodyParser = require('body-parser')
 const request = require('request')
-const sampleService = require('./services/SampleService')
+const ggPlacrUri = 'https://maps.googleapis.com/maps/api/place/nearbysearch/'
+const respType = 'json'
+const ggKey = 'AIzaSyD00nvz4mUNbto6QrUaBmKYs2vXx_wrcbw'
 
-const  ggPlacrUri = 'https://maps.googleapis.com/maps/api/place/nearbysearch/'
-const  respType = 'json'
-const  ggKey = 'AIzaSyD00nvz4mUNbto6QrUaBmKYs2vXx_wrcbw'
+// import helpers
+const apiHelper = require('./helpers/APIHelper')
+
+// import service layer
+const sampleService = require('./services/SampleService')
+const asm1 = require('./services/assignment1')
 
 // using parsers
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
-// heath check
+// health check
 app.get('/ping', (req, res) => {
     res.send('OK')
 })
