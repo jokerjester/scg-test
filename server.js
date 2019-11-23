@@ -44,9 +44,10 @@ app.get('/ans2', (req, res) => {
 // assignment3
 const token = 'DNrLFw6H0xJ/iSkv0IdI6QnCVOD14pUX/ie0zZel0IHhapJAqb3xUSkI3XAUlx0wUiNSyV4KRGsLQ0irygjnSpNjyQeZhi+uZqzW1cMWAkOOEmKocHvOS/xw9mFVFXJez9GXfmWdaHouym0NYA9k4AdB04t89/1O/w1cDnyilFU='
 
-app.post('/webhooks', (req, res) => {
+app.post('/webhooks', async (req, res) => {
     let reply_token = req.body.events[0].replyToken
     let question = req.body.events[0].message.text
+    console.log(question)
     let answer = sampleService.findAnswer(question).then(ans => {
         if(ans == null)
             return "I don't know what are you talking about"
