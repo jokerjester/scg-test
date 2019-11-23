@@ -49,13 +49,8 @@ app.post('/webhooks', async (req, res) => {
     let question = req.body.events[0].message.text
     console.log(question)
     let answer = sampleService.findAnswer(question).then(ans => {
-        if(ans == null)
-            return "I don't know what are you talking about"
-        else
-            return ans.answer
+        reply(reply_token, (ans == null)? "I don't know what are you talking about" : ans.answer)
     })
-    console.log(answer)
-    reply(reply_token, answer)
     res.sendStatus(200)
 })
 
