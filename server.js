@@ -45,7 +45,6 @@ app.get('/ans2', (req, res) => {
 app.post('/webhooks', async (req, res) => {
     let reply_token = req.body.events[0].replyToken
     let question = req.body.events[0].message.text
-    console.log(question)
     sampleService.findAnswer(question).then(ans => {
         lineMsgHelper.reply(reply_token, (ans == null)? "I don't know what are you talking about" : ans.answer)
     })
