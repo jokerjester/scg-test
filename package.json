@@ -24,5 +24,8 @@
     "mongoose": "^5.7.12",
     "request": "^2.88.0",
     "swagger-ui-express": "^4.1.2"
+  },
+  "scripts": {
+    "start": "node ./routers/router.js"
   }
 }
