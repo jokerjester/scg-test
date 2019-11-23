@@ -2,7 +2,6 @@ const express = require('express')
 const app = express()
 const status = require('http-status');
 const bodyParser = require('body-parser')
-const request = require('request')
 const ggPlacrUri = 'https://maps.googleapis.com/maps/api/place/nearbysearch/'
 const respType = 'json'
 const ggKey = 'AIzaSyD00nvz4mUNbto6QrUaBmKYs2vXx_wrcbw'
