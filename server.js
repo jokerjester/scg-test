@@ -33,10 +33,10 @@ var ans1 = asm1.findXYZ(arr)
 app.get('/ans2', (req, res) => {
     apiHelper.makeAPIcall(ggPlacrUri.concat(respType).concat("?location=13.8234866,100.5081204&radius=1500&types=restaurant&key=").concat(ggKey))
     .then(response => {
-        res.json(response)
+        res.status(status.OK).json({code: 200, resterants: response.results.map(result => result.name)})
     })
     .catch(error => {
-        res.status(status.INTERNAL_SERVER_ERROR).send(error)
+        res.status(status.INTERNAL_SERVER_ERROR).json({code: 500, error: error})
     })
 })
 
@@ -45,7 +45,7 @@ app.post('/webhooks', async (req, res) => {
     let reply_token = req.body.events[0].replyToken
     let question = req.body.events[0].message.text
     console.log(question)
-    let answer = sampleService.findAnswer(question).then(ans => {
+    sampleService.findAnswer(question).then(ans => {
         lineMsgHelper.reply(reply_token, (ans == null)? "I don't know what are you talking about" : ans.answer)
     })
     res.sendStatus(200)
@@ -54,14 +54,14 @@ app.post('/webhooks', async (req, res) => {
 app.get('/bot-samples/:question', async (req, res) => {
     const { question } = req.params
     sampleService.findAnswer(question)
-    .then(response => res.json({code: 200, data: response}))
-    .catch(error => res.json({code: 500}))
+    .then(response => res.status(status.OK).json({code: 200, data: response}))
+    .catch(error => res.status(status.INTERNAL_SERVER_ERROR).json({code: 500, error: error}))
 })
 
 app.post('/bot-samples', async (req, res) => {
     sampleService.saveSample(req.body)
-    .then(response => res.json({code: 201, data: response}))
-    .catch(error => res.json({code: 500}))
+    .then(response => res.status(status.CREATED).json({code: 201, data: response}))
+    .catch(error => res.status(status.INTERNAL_SERVER_ERROR).json({code: 500, error: error}))
 })
 
 
