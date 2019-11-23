@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 const asm1 = require('./assignment1')
-const api_helper = require('./helpers/APIHelper')
+const apiHelper = require('./helpers/APIHelper')
 const status = require('http-status');
 const bodyParser = require('body-parser')
 const request = require('request')
@@ -29,7 +29,7 @@ var ans1 = asm1.findXYZ(arr)
 
 // assignment2
 app.get('/ans2', (req, res) => {
-    api_helper.makeAPIcall(ggPlacrUri.concat(respType).concat("?location=13.8234866,100.5081204&radius=1500&types=restaurant&key=").concat(ggKey))
+    apiHelper.makeAPIcall(ggPlacrUri.concat(respType).concat("?location=13.8234866,100.5081204&radius=1500&types=restaurant&key=").concat(ggKey))
     .then(response => {
         res.json(response)
     })
