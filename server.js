@@ -26,7 +26,7 @@ app.get('/ping', (req, res) => {
 app.get('/ans1', (req, res) => {
 var arr = ["X", 5, 9, 15, 23, "Y", "Z"]
 var ans1 = asm1.findXYZ(arr)
-    res.send(ans1)
+    res.status(status.OK).json({code:200, data: ans1})
 })
 
 // assignment2
@@ -58,7 +58,7 @@ app.get('/bot-samples/:question', async (req, res) => {
     .catch(error => res.status(status.INTERNAL_SERVER_ERROR).json({code: 500, error: error}))
 })
 
-app.post('/bot-samples', async (req, res) => {
+app.post('/teach-bot', async (req, res) => {
     sampleService.saveSample(req.body)
     .then(response => res.status(status.CREATED).json({code: 201, data: response}))
     .catch(error => res.status(status.INTERNAL_SERVER_ERROR).json({code: 500, error: error}))
