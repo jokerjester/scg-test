@@ -17,6 +17,9 @@ router.route('/ans2')
 router.route('/teach-bot')
   .post(controller.teachBot);
 
+router.route('/webhooks')
+  .post(controller.webhook);
+
 app.use('/api/v1', router);
 
 var server_port = process.env.YOUR_PORT || process.env.PORT || 80;
