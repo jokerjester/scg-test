@@ -1,19 +1,15 @@
 const express = require('express')
 const app = express()
 const asm1 = require('./assignment1')
-const api_helper = require('./helpers/APIhelper')
+const api_helper = require('./helpers/APIHelper')
 const status = require('http-status');
 const bodyParser = require('body-parser')
 const request = require('request')
-const mongoose = require('mongoose')
-const Sample = require('./models/sample')
+const sampleService = require('./services/SampleService')
 
 const  ggPlacrUri = 'https://maps.googleapis.com/maps/api/place/nearbysearch/'
 const  respType = 'json'
-const  ggKey = 'AIzaSyD00nvz4mUNbto6QrUaBmKYs2vXx_wrcbwหกฟกฟหกฟหก'
-
-// connect to db
-mongoose.connect('mongodb://jkd:p%40ssw0rd@ds211558.mlab.com:11558/heroku_vbrlvdjr')
+const  ggKey = 'AIzaSyD00nvz4mUNbto6QrUaBmKYs2vXx_wrcbw'
 
 // using parsers
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -48,7 +44,12 @@ const token = 'DNrLFw6H0xJ/iSkv0IdI6QnCVOD14pUX/ie0zZel0IHhapJAqb3xUSkI3XAUlx0wU
 app.post('/webhooks', (req, res) => {
     let reply_token = req.body.events[0].replyToken
     let question = req.body.events[0].message.text
-    var answer = findAnswer(question)
+    let answer = sampleService.findAnswer(question).then(ans => {
+        if(ans == null)
+            return "I don't know what are you talking about"
+        else
+            ans.answer
+    })
     console.log(answer)
     reply(reply_token, answer)
     res.sendStatus(200)
@@ -56,19 +57,15 @@ app.post('/webhooks', (req, res) => {
 
 app.get('/bot-samples/:question', async (req, res) => {
     const { question } = req.params
-    console.log(question)
-    const sample = await Sample.find({keyword: question})
-    res.send(sample)
+    sampleService.findAnswer(question)
+    .then(response => res.json({code: 200, data: response}))
+    .catch(error => res.json({code: 500}))
 })
 
-function findAnswer(question) {
-    Sample.findOne({keyword: question}).answer
-}
-
 app.post('/bot-samples', async (req, res) => {
-    const sample = new Sample(req.body)
-    await sample.save()
-    res.send("sample is saved!")
+    sampleService.saveSample(req.body)
+    .then(response => res.json({code: 201, data: response}))
+    .catch(error => res.json({code: 500}))
 })
 
 
