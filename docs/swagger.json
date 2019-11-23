@@ -1,0 +1,191 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "These are answers of SCG assignment",
+    "version": "1.0.0",
+    "title": "SCG Assignment",
+    "contact": {
+      "email": "jokerjester@me.com"
+    }
+  },
+  "host": "scg-line-bot.herokuapp.com",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "XYZ",
+      "description": " function for finding X, Y, Z value "
+    },
+    {
+      "name": "Google Place",
+      "description": " finding all restaurants in Bangsue area and show result by JSON"
+    },
+    {
+      "name": "Line messaging",
+      "description": "small project for Line messaging API"
+    }
+  ],
+  "schemes": [
+    "https",
+    "http"
+  ],
+  "paths": {
+    "/ans1": {
+      "get": {
+        "tags": [
+          "XYZ"
+        ],
+        "summary": "function for finding X, Y, Z value",
+        "operationId": "findXYZ",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "integer",
+                  "example": 200
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "example": [
+                    "x = 3",
+                    "y = 33",
+                    "z = 45"
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error",
+            "examples": {
+              "application/json": {
+                "code": 500,
+                "error": "Something went wrong"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ans2": {
+      "get": {
+        "tags": [
+          "Google Place"
+        ],
+        "summary": "finding all restaurants in Bangsue area and show result by JSON",
+        "operationId": "findBangSueResterants",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "integer",
+                  "example": 200
+                },
+                "resterants": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "example": [
+                    "Ban Phibun Restaurant",
+                    "Center Milk",
+                    "โจ๊กเมืองกรุง"
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error",
+            "examples": {
+              "application/json": {
+                "code": 500,
+                "error": "Something went wrong"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/teach-bot": {
+      "post": {
+        "tags": [
+          "Line messaging"
+        ],
+        "summary": "Teach line bot to remember keyword and answer",
+        "description": "Teach line bot to remember keyword and answer",
+        "operationId": "teachLineBot",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "user",
+            "description": "The user to create.",
+            "schema": {
+              "type": "object",
+              "required": [
+                "keyword",
+                "answer"
+              ],
+              "properties": {
+                "keyword": {
+                  "type": "string"
+                },
+                "answer": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "examples": {
+              "application/json": {
+                "code": 201,
+                "data": {
+                  "_id": "5dd8810cd4b0b325ac2f7083",
+                  "keyword": "name",
+                  "answer": "jokerjester",
+                  "__v": 0
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error",
+            "examples": {
+              "application/json": {
+                "code": 500,
+                "error": "Something went wrong"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
