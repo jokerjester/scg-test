@@ -8,7 +8,7 @@ const respType = 'json'
 const ggKey = 'AIzaSyD00nvz4mUNbto6QrUaBmKYs2vXx_wrcbw'
 
 // import helpers
-const apiHelper = require('./helpers/APIHelper')
+const apiHelper = require('./helpers/WSHelper')
 
 // import service layer
 const sampleService = require('./services/SampleService')
