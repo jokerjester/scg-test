@@ -2,7 +2,7 @@ const status = require('http-status');
 
 const ggPlacrUri = 'https://maps.googleapis.com/maps/api/place/nearbysearch/'
 const respType = 'json'
-const ggKey = 'AIzaSyD00nvz4mUNbto6QrUaBmKYs2vXx_wrcbw'
+const ggKey = 'some gg key'
 
 // import helpers
 const apiHelper = require('../helpers/API_Helper')
